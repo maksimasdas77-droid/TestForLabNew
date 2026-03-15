@@ -8,9 +8,13 @@ namespace TestForLabNew
 {
     internal class battory
     {
-        public int volts;
-        public int batterycapacity;
-        public int startingcurrent;
-        public string? batterydescription;
+        private int volts;
+        private int batterycapacity;
+        private int startingcurrent;
+        public string? Batterydescription { get; set; }
+        public int Volts { get => volts; set => volts = value; }
+        public int Batterycapacity { get => batterycapacity; set => batterycapacity = value; }
+        public int Startingcurrent { get => startingcurrent; set => startingcurrent = value; }
     }
 }
+    

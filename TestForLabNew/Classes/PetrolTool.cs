@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestForLabNew
 {
-    internal class PetrolTool
+    internal class PetrolTool //дописать этот класс потом, когда доведу до ума автомобили
     {
 
     }

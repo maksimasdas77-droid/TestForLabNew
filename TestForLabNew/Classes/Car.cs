@@ -9,21 +9,64 @@ namespace TestForLabNew
 {
     internal class Car
     {
-        public string name;
-        public string? model;
-        public int year;
-        public string owner;
+        public string? Name { get; set; }
+        public string? Model { get; set; }
+        private int year;
+        public string Owner { get; set; }
 
-        public string? appointment;
-        public int? tankscount;
-        public int? tankvol;
-        public int? wheelcount;
-        public int? batterycount;
-        public battory? battory;
+        public string? Appointment { get; set; }
+        private int? tankscount;
+        private int? tankvol;
+        private int? wheelcount;
+        private int? batterycount;
 
-        public WheelSize? wheelsize;
 
-        public DateTime CreatedAt;
-        public DateTime LastUpdatedAt;
+        public battory? battory { get; set; }
+        public WheelSize? wheelsize { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
+
+        public int Year
+        {
+            get => year;
+            set
+            {
+                year = value;
+            }
+        }
+
+        public int? Tankscount
+        {
+            get => tankscount;
+            set
+            {
+                tankscount = value;
+            }
+        }
+        public int? Tankvol
+        {
+            get => tankvol;
+            set
+            {
+                tankvol = value;
+            }
+        }
+        public int? Wheelcount
+        {
+            get => wheelcount;
+            set
+            {
+                wheelcount = value;
+            }
+        }
+        public int? Batterycount
+        {
+            get => batterycount;
+            set
+            {
+                batterycount = value;
+            }
+        }
     }
 }
