@@ -12,6 +12,17 @@ namespace TestForLabNew
         private int profile; //65
         private int radius; //16
 
+        public WheelSize():this(0, 0, 0)
+        {
+        }
+
+        public WheelSize(int wight, int profile, int radius)
+        {
+            Wight = wight;
+            Profile = profile;
+            Radius = radius;
+        }
+
         public int Wight
         {
             get => wight;
