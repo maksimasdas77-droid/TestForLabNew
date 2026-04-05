@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace TestForLabNew
 {
-    internal class battery
+    internal class Battery
     {
         private int volts;
         private int batterycapacity;
         private int startingcurrent;
         public string? Batterydescription { get; set; }
 
-        public battery() : this(12, 60, 300, "Стандартный аккумулятор")
+        public Battery() : this(12, 60, 300, "Стандартный аккумулятор")
         {
         }
 
-        public battery(int volts, int capacity, int startingCurrent, string? description = null)
+        public Battery(int volts, int capacity, int startingCurrent, string? description = null)
         {
             Volts = volts;
             Batterycapacity = capacity;

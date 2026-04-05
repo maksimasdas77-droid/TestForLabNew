@@ -5,114 +5,98 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace TestForLabNew
 {
     internal class Car
     {
-        public string? Name { get; set; }
-        public string? Model { get; set; }
-        private int year;
-        public string Owner { get; set; }
-
-        public string? Appointment { get; set; }
-        private int? tankscount;
-        private int? tankvol;
-        private int? wheelcount;
-        private int? batterycount;
-
-
-        //public battery? battery { get; set; } //задел на будущее, пока разберусь с конструктором и всем остальным
-        //public WheelSize? wheelsize { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
-
-        public Car() : this("Не задано", "Не задано", 2000, "РОСН", "Специльная", null, null, null, null)
-        { 
-        }
-
-        public Car(string? name, string? model, int year, string owner, string? appointment, int? tankscount, int? tankvol, int? wheelcount, int? batterycount)
-        {
-            Name = name;
-            Model = model;
-            this.year = year;
-            Owner = owner;
-            Appointment = appointment;
-            this.tankscount = tankscount;
-            this.tankvol = tankvol;
-            this.wheelcount = wheelcount;
-            this.batterycount = batterycount;
-            CreatedAt = DateTime.Now;
-            LastUpdatedAt = DateTime.Now;
-        }
-        public Car(string name, string owner, int year)
-    : this(name, null, year, owner, null, null, null, null, null)
-        {
-        }
-
-        public Car(string name, string model, int year, string owner)
-    : this(name, model, year, owner, null, null, null, null, null)
-        {
-        }
-
+        public string Name { get; set; }
+        public string Model { get; set; }
         public int Year
         {
             get => year;
             set
             {
+                if (value < 1900 || value > DateTime.Now.Year)
+                    throw new ArgumentException("Некорректный год выпуска");
                 year = value;
+                Touch();
             }
+        }
+        private int year;
+
+        public string Owner { get; set; }
+        public string Appointment { get; set; }
+
+        public int? TanksCount { get; set; }
+        public int? TankVolume { get; set; }
+        public int? WheelCount { get; set; }
+
+        public List<Battery> Batteries { get; set; } = new();
+        public WheelSize WheelSize { get; set; }
+
+        public DateTime CreatedAt { get; private set; } = DateTime.Now;
+        public DateTime LastUpdatedAt { get; private set; } = DateTime.Now;
+
+        private void Touch() => LastUpdatedAt = DateTime.Now;
+
+        public Car()
+    : this("Не задано", "Не задано", 2000, "РОСН", "Специальная", null, null, null, null)
+        {
         }
 
-        public int? Tankscount
+        public Car(string? name, string? model, int year, string owner,
+                   string? appointment, int? tanksCount, int? tankVolume,
+                   int? wheelCount, int? batteryCount)
         {
-            get => tankscount;
-            set
+            Name = name ?? "Не задано";
+            Model = model;
+            Year = year;
+            Owner = owner;
+            Appointment = appointment;
+            TanksCount = tanksCount;
+            TankVolume = tankVolume;
+            WheelCount = wheelCount;
+
+            // создаём аккумуляторы, если указано количество
+            if (batteryCount.HasValue)
             {
-                tankscount = value;
+                for (int i = 0; i < batteryCount.Value; i++)
+                    Batteries.Add(new Battery());
             }
-        }
-        public int? Tankvol
-        {
-            get => tankvol;
-            set
-            {
-                tankvol = value;
-            }
-        }
-        public int? Wheelcount
-        {
-            get => wheelcount;
-            set
-            {
-                wheelcount = value;
-            }
-        }
-        public int? Batterycount
-        {
-            get => batterycount;
-            set
-            {
-                batterycount = value;
-            }
+
+            CreatedAt = DateTime.Now;
+            LastUpdatedAt = DateTime.Now;
         }
 
-        public override string? ToString()
+        public Car(string name, string owner, int year)
+            : this(name, null, year, owner, null, null, null, null, null)
         {
-            //return $"{Name} {Model} ({Year}) — владелец: {Owner}";
-           return $"=== Информация об автомобиле ===\n" +
-       $"Название:             {Name}\n" +
-       $"Модель:               {Model}\n" +
-       $"Год выпуска:          {Year}\n" +
-       $"Владелец:             {Owner}\n" +
-       $"Назначение:           {Appointment}\n" +
-       $"Количество баков:     {Tankscount}\n" +
-       $"Объём бака:           {Tankvol}\n" +
-       $"Количество колёс:     {Wheelcount}\n" +
-       $"Количество АКБ:       {Batterycount}\n" +
-       $"Создано:              {CreatedAt}\n" +
-       $"Последнее обновление: {LastUpdatedAt}\n" +
-       $"===============================";
+        }
+
+        public Car(string name, string? model, int year, string owner)
+            : this(name, model, year, owner, null, null, null, null, null)
+        {
+        }
+        public override string ToString()
+        {
+            return $"""
+        === Информация об автомобиле ===
+        Название:             {Name}
+        Модель:               {Model}
+        Год выпуска:          {Year}
+        Владелец:             {Owner}
+        Назначение:           {Appointment}
+        Количество баков:     {TanksCount}
+        Объём бака:           {TankVolume}
+        Количество колёс:     {WheelCount}
+        Размер колёс:         {WheelSize}
+        Количество АКБ:       {Batteries.Count}
+        Создано:              {CreatedAt}
+        Последнее обновление: {LastUpdatedAt}
+        ===============================
+        """;
         }
     }
+
 }
